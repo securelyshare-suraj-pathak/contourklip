@@ -2259,7 +2259,7 @@ namespace contourklip {
     struct Config{
         bool postprocess = true;
         bool postprocess_collinear = true;
-        bool fail_on_approx_equal = true;
+        bool fail_on_approx_equal = false;
         double approx_equal_tol = 1e-6;
     };
 

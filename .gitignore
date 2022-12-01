@@ -10,3 +10,5 @@ cmake-build-*/
 # Don't keep generated svgs.
 *.svg
 !in.svg
+
+build/
