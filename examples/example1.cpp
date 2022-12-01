@@ -1,6 +1,23 @@
 #include <iostream>
 #include "contourklip.hpp"
 
+char** split(char **contour_string_1, char **contour_string_2){
+    // iterate over each line of the strings
+        // check how many numbers are present on the line
+        // if it contains a single coordinate
+            // do contour1.push_back({number})
+        // else if it contains three coordinates
+            // do contour1.push_back({number1}, {number2}, {number 3})
+        // else
+            // invalid number of arguments
+    //  do this for the second contour as well
+    // initialize the contourklip related structs / objects / classes / vector
+    // call the split method of contourklip - result gets stores in a result vector
+    // convert the result vector to string 
+    // finally return the stringified vector and do the remaining operations in Python
+
+}
+
 int main() {
     contourklip::Contour contour1{{0, 100}};
     contour1.push_back({50, 100});
