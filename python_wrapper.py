@@ -1,6 +1,6 @@
 import subprocess
-inp1 = [[(434, 640)], [(292, 640), (144, 563), (144, 357)], [(144, 170), (270, 74), (435, 74)], [(600, 74), (726, 170), (726, 357)], [(726, 541), (604, 640), (434, 640)]]
-inp2 = [[(435, 800)], [(900, 800)], [(900, -20)], [(435, -20)]]
+
+
 def coords_to_string(inp):
     st = ''
     st += " ".join(str(i) for i in inp[0][0])
@@ -8,11 +8,25 @@ def coords_to_string(inp):
         st += f" {len(i)} "
         st += " ".join([" ".join(str(k) for k in j) for j in i])
     return st
-s1 = coords_to_string(inp1)
-s2 = coords_to_string(inp2)
-s = subprocess.check_output(["./build/contourklip_example", s1, s2])
-# s = subprocess.check_output(["./build/contourklip_example", "0 100 1 50 100 3 77.5 100 100 77.5 100 50 3 100 22.5 77.5 0 50 0 1 0 0", "150 25 1 100 25 3 72.3 25 50 47.3 50 75 3 50 102.5 72.3 125 100 125 1 150"])
-s = s.decode()
-# s.split("\n")
 
-print(s)
+
+def get_coords_from_tuple_string(tup_str):
+    coord_strs = tup_str[1:-1].split(") (")
+    return [tuple([float(j) for j in coord_str.split(", ")]) for coord_str in coord_strs]
+    
+    
+def get_intersction(inp1, inp2):
+    s1 = coords_to_string(inp1)
+    s2 = coords_to_string(inp2)
+    s = subprocess.check_output(["./build/contourklip_example", s1, s2]).decode()
+    remove_first_line = "\n".join(list(filter(None, s.split("\n")))[1:])
+    split_by_contour = filter(None, remove_first_line.split("contour:"))
+    contours_strs_unformatted = [list(filter(None, i.split("\n"))) for i in split_by_contour]
+    final = [[get_coords_from_tuple_string(j) for j in i] for i in contours_strs_unformatted]
+    return final
+
+
+if __name__ == "__main__":
+    inp1 = [[(434, 640)], [(292, 640), (144, 563), (144, 357)], [(144, 170), (270, 74), (435, 74)], [(600, 74), (726, 170), (726, 357)], [(726, 541), (604, 640), (434, 640)]]
+    inp2 = [[(435, 800)], [(900, 800)], [(900, -20)], [(435, -20)]]
+    print(get_intersction(inp1, inp2))
